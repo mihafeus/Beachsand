@@ -38,9 +38,9 @@ void loop(){
     buf[buflen] = '\0'; //Null terminate the char array, otherwhise problems could occur with values of different lenghts
     String str((char *)buf); //Converts received values to a string
 
-     Serial.println((char *)buf);//send raw values to serial
+     //Serial.println((char *)buf);//send raw values to serial
 
-    if(str=="Bell"){ //Put in the name of the transmitter is you want to listen to
+    if(str=="Door"){ //Put in the name of the transmitter is you want to listen to
 
       Serial.print("Success! You are listening to ");
       Serial.println(str);
