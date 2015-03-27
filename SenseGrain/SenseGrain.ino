@@ -115,7 +115,7 @@ void setup() {
 //Main Program Loop -----------------------------------------------------
 void loop() {
 
-  if(masterSwitch==0){
+  if(masterSwitch==0){//timer setups
 
     //Now put the system to sleep
     if (f_wdt==1) {  // wait for timed out watchdog / flag is set when a watchdog timeout occurs
@@ -131,7 +131,7 @@ void loop() {
     }
   }
 
-  if(masterSwitch==1){
+  if(masterSwitch==1){//interrupt setup
 
     transmit();
     sleep(); 
