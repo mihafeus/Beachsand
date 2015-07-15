@@ -6,12 +6,12 @@ The SenseGrain is an Attiny85 with an RF transmitter and a battery. The SandCast
 The SenseGrain then keeps transmitting it’s name and the value from the analog sensor according to the intervals it was set up to. Those values are then received by the SandCastle and can from there be used for whatever application they are needed. One SandCastle can receive values from multiple SenseGrains.
 
 TO DO:
-- Add Fritzing schematics of the SenseGrain and SandCastle
+- New communication protocol
+- ActGrain remote wakeup and auto-pair
+- Automatic name generation for SenseGrains
 - Improve documentation
 - Add links to other resources
 - Visualize the set-up process
-- Create ActGrain
 - Create direct connections between SenseGrain and ActGrain
-- Do another iteration on the SenseGrain PCB
 - Create SandCastle Arduino shield with Wi-fi and SD-card support, for logging and sending values without the need of a PC
 
