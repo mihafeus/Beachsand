@@ -20,9 +20,10 @@ int timer = 0; // Sets the number of wake up times after which to send data
 int counter = 0; // counts the times the microcontroller has woken up
 int masterSwitch; //this switch on either interrupt sleep or timer sleep
 int wdSetup; //watchdog setup number
-// 0=16ms, 1=32ms, 2=64ms, 3=128ms, 4=250ms, 5=500ms 6=1 sec, 7=2 sec, 8=4 sec, 9=8sec
+// 0=16ms, 1=32ms,2=64ms,3=128ms,4=250ms,5=500ms 6=1 sec,7=2 sec, 8=4 sec, 9= 8sec
 
-String str = "Door"; //Name of the transmitter
+String SendStr;
+String NameStr = "Ideo1"; //The name of the transmitter has to consist of 5 characters
 String timerStr = "Not set";
 
 //Set Up Instrictions
@@ -115,7 +116,7 @@ void setup() {
 //Main Program Loop -----------------------------------------------------
 void loop() {
 
-  if(masterSwitch==0){//timer setups
+  if(masterSwitch==0){
 
     //Now put the system to sleep
     if (f_wdt==1) {  // wait for timed out watchdog / flag is set when a watchdog timeout occurs
@@ -131,7 +132,7 @@ void loop() {
     }
   }
 
-  if(masterSwitch==1){//interrupt setup
+  if(masterSwitch==1){
 
     transmit();
     sleep(); 
@@ -215,18 +216,19 @@ void transmit(){
   if(wdSetup!=0 || masterSwitch==1){ //send values 
 
     // SEND CODE --------------- 
-    int str_len = str.length() + 1;  // Length (with one extra character for the null terminator) 
+    Sensor1Data = analogRead(A2); //reading the sensor
+    SendStr=NameStr+Sensor1Data; //combinig name with sensor values
+
+    int str_len = SendStr.length() + 1;  // Length (with one extra character for the null terminator) 
     char char_array[str_len]; // Prepare the character array (the buffer)   
-    str.toCharArray(char_array, str_len); // Copy it over
+    SendStr.toCharArray(char_array, str_len); // Copy it over
     vw_send((uint8_t *)char_array, strlen(char_array));
     vw_wait_tx(); // Wait until the whole message is gone
 
-    Sensor1Data = analogRead(A2);
-
-    itoa(Sensor1Data,Sensor1CharMsg,10);  // Convert integer data to Char array directly 
-
-    vw_send((uint8_t *)Sensor1CharMsg, strlen(Sensor1CharMsg));
-    vw_wait_tx(); // Wait until the whole message is gone
+    //    itoa(Sensor1Data,Sensor1CharMsg,10);  // Convert integer data to Char array directly 
+    //
+    //    vw_send((uint8_t *)Sensor1CharMsg, strlen(Sensor1CharMsg));
+    //    vw_wait_tx(); // Wait until the whole message is gone
 
     digitalWrite(powerPin, LOW); //cuts power from the sensor
 
@@ -247,4 +249,3 @@ void transmit(){
     digitalWrite(powerPin, LOW); //cuts power from the sensor
   }
 }
-

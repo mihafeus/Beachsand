@@ -13,9 +13,9 @@ int LBit = 5;
 
 void setup() {
   vw_set_ptt_inverted(true); // Required for DR3100
-  
+
   vw_set_rx_pin(12); // Connect this pin to the DATA pin on your receiver
-  
+
   vw_setup(1000);  // Bits per second - the speed of the communication 
   pinMode(ledPin, OUTPUT); // LED
   Serial.begin(9600); // set baud rate of serial communication 
@@ -38,29 +38,25 @@ void loop(){
     buf[buflen] = '\0'; //Null terminate the char array, otherwhise problems could occur with values of different lenghts
     String str((char *)buf); //Converts received values to a string
 
-     //Serial.println((char *)buf);//send raw values to serial
+    Serial.println((char *)buf);//send raw values to serial
 
-    if(str=="Door"){ //Put in the name of the transmitter is you want to listen to
+    String name = str.substring(0,5); //splits the input integet into two parts name and value
+    String value = str.substring(5);
 
-      Serial.print("Success! You are listening to ");
-      Serial.println(str);
+    Serial.print("Name: ");
+    Serial.print(name);
 
-    }
-    else{//This part is listening to the value of the sensor
+    Sensor1Data = value.toInt(); 
 
-      
-      Sensor1Data = atoi((char *)buf); //Converts received values to an integer
-      Serial.println(Sensor1Data);
+    Serial.print("  Value: ");
+    Serial.println(Sensor1Data);
 
-      int sensScale = Sensor1Data/4; //for the littleBits integration, converts the analogIn value for analogWrite
-      analogWrite(LBit, sensScale); //littleBits integration, this passes through a low-pass filter on the ciruit 0.1uF, 4.7KOhm
 
-      digitalWrite(13, false); // Turn off light to and await next message 
+    int sensScale = Sensor1Data/4; //for the littleBits integration, converts the analogIn value for analogWrite
+    analogWrite(LBit, sensScale); //littleBits integration, this passes through a low-pass filter on the ciruit 0.1uF, 4.7KOhm
 
-    } // END if (string or int)
+    digitalWrite(13, false); // Turn off light to and await next message 
+
+
   } // END if vw_get_message
 } // END loop
-
-
-
-
