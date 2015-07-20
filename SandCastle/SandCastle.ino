@@ -8,7 +8,7 @@ int Sensor1Data; // Sensors
 char Sensor1CharMsg[4]; // RF Transmission container
 
 int LBit = 5; //for littleBits integration
-
+int CS = 12; //CS pin needs to be high or not connected, else the receiver is turned off
 int powerPin = 11; //to give power to the receiver if you decide to plug it streight into the Arduino
 
 void setup() {
@@ -18,6 +18,8 @@ void setup() {
   vw_setup(1000);  // Bits per second - the speed of the communication 
   pinMode(powerPin, OUTPUT);
   digitalWrite(powerPin, HIGH); //power on
+  pinMode(CS, OUTPUT);
+  digitalWrite(CS, HIGH); //power on
   Serial.begin(9600); // set baud rate of serial communication 
   vw_rx_start();       // Start the receiver PLL running    
 
