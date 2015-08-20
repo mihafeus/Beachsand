@@ -12,7 +12,7 @@ const int powerPin = 1;             // Power saving for the sensor
 int Sensor1Data;
 int Sensor1DataOld;
 char Sensor1CharMsg[4]; 
-
+ 
 int timer = 0;                      // Sets the number of wake up times after which to send data
 int counter = 0;                    // Counts the times the microcontroller has woken up
 int masterSwitch;                   // This switch on either interrupt sleep or timer sleep

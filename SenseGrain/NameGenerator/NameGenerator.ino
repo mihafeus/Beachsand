@@ -1,28 +1,25 @@
-//#include <TrueRandom.h>
 #include <EEPROM.h>
-char crka;
+char Char;
 String letter;
 String name = "";
 boolean conso = false;
 boolean vowel = false;
 int shiftkey = 64;
 boolean nameWritten = false;
-
 byte value;
 
 void setup() {
-  Serial.begin(9600);
-  randomSeed(analogRead(0));
+  randomSeed((analogRead(A2)*analogRead(A1)*analogRead(A3))/3);
 }
 
 void loop() {
   whatsmyname();
-  //delay(50);
 }
 
 void whatsmyname(){
-
-  //crka = random(25)+65;
+  
+  randomSeed((analogRead(A2)*analogRead(A1)*analogRead(A3))/3);
+  
   if(name==""){
     shiftkey = 65;
   }
@@ -30,15 +27,13 @@ void whatsmyname(){
     shiftkey = 97;
   }
 
-  crka = random(26)+shiftkey;
-  //crka = TrueRandom.random(0,26)+shiftkey;
+  Char = random(26)+shiftkey;
 
-  letter = String(crka);
-  //Serial.print(letter);
+  letter = String(Char);
 
   if(letter == "A" || letter == "E" || letter =="I" || letter =="O" || 
-  letter =="U" || letter == "a" || letter == "e" || letter =="i" || letter =="o" || 
-  letter =="u"){
+    letter =="U" || letter == "a" || letter == "e" || letter =="i" || 
+    letter =="o" || letter =="u"){
 
     if(vowel == false){
       name += letter;
@@ -56,12 +51,10 @@ void whatsmyname(){
   }
 
   if(name.length()==4){
-    //name += String(TrueRandom.random(1,10));
+
     name += String(random(1,10));
-    //Serial.println(name);
     vowel = false;
     conso = false;
-    //name="";
 
     if(nameWritten == false){
       for (int i = 0; i < name.length(); i++){
@@ -69,13 +62,5 @@ void whatsmyname(){
         nameWritten = true;
       }
     } 
-    name="";
-    for (int i = 0; i < 5; i++){
-      value = EEPROM.read(i);
-      crka = value;
-      name += String(crka); 
-      Serial.println(name);
-    }
   }
 }
-
